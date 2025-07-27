@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
     const { email, password, username } = req.body;
-
+    
     try {
         if (!email || !password) {
             return res.status(400).json({ message: 'Email, password wajib diisi' });
