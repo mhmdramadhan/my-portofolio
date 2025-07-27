@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     thumbnail: DataTypes.TEXT,
     github_url: DataTypes.TEXT,
     live_url: DataTypes.TEXT,
-    is_featured: DataTypes.ENUM
+    is_featured: DataTypes.ENUM('yes', 'no')
   }, {
     sequelize,
     modelName: 'Project',

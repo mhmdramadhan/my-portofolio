@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Skills.init({
     name: DataTypes.STRING,
-    level: DataTypes.ENUM,
-    category: DataTypes.ENUM
+    level: DataTypes.ENUM('beginner', 'intermediate', 'advanced', 'expert'),
+    category: DataTypes.ENUM('soft', 'hard skills', 'languages', 'tachnical')
   }, {
     sequelize,
     modelName: 'Skills',

@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   ProgrammingLanguage.init({
     name: DataTypes.STRING,
-    type: DataTypes.ENUM,
+    type: DataTypes.ENUM('language', 'framework', 'library'),
     icon_url: DataTypes.TEXT,
-    proficiency: DataTypes.ENUM
+    proficiency: DataTypes.ENUM('beginner', 'intermediate', 'advanced', 'expert')
   }, {
     sequelize,
     modelName: 'ProgrammingLanguage',
