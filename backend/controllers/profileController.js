@@ -1,4 +1,5 @@
-const { profile } = require('../models')
+const { profile } = require('../models');
+const { validationResult } = require('express-validator');
 
 
 exports.getAll = async (req, res) => {
@@ -17,27 +18,11 @@ exports.getAll = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const { name, title, description, photo_url } = req.body;
-
-    if (!name || !title || !description || !photo_url) {
-        return res.status(400).json({
-            message: 'All fields (name, title, description, photo_url) are required'
-        });
-    }
-
-    // check valid url
-    const urlPattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator 
-    if (!urlPattern.test(photo_url)) {
-        return res.status(400).json({
-            message: 'Invalid photo URL'
-        });
-    }
-
     try {
         const newProfile = await profile.create({
             name,
@@ -45,7 +30,6 @@ exports.create = async (req, res) => {
             description,
             photo_url
         });
-
         res.status(201).json({
             message: 'Profile created successfully',
             data: newProfile
@@ -59,28 +43,12 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const { id } = req.params;
     const { name, title, description, photo_url } = req.body;
-
-    if (!name || !title || !description || !photo_url) {
-        return res.status(400).json({
-            message: 'All fields (name, title, description, photo_url) are required'
-        });
-    }
-
-    // check valid url
-    const urlPattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator 
-    if (!urlPattern.test(photo_url)) {
-        return res.status(400).json({
-            message: 'Invalid photo URL'
-        });
-    }
-
     try {
         const [updated] = await profile.update({
             name,
@@ -90,7 +58,6 @@ exports.update = async (req, res) => {
         }, {
             where: { id }
         });
-
         if (updated) {
             const updatedProfile = await profile.findByPk(id);
             res.status(200).json({
