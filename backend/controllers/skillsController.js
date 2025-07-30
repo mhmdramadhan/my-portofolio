@@ -1,13 +1,13 @@
+
 const { validationResult } = require('express-validator');
 const { skills } = require('../models');
-const { create } = require('./profileController');
 
 exports.getAll = async (req, res) => {
     try {
-        const skills = await skills.findAll();
+        const allSkills = await skills.findAll();
         res.status(200).json({
             message: 'Skills retrieved successfully',
-            data: skills
+            data: allSkills
         });
     } catch (error) {
         res.status(500).json({
