@@ -11,6 +11,7 @@ dotenv.config({
 const authRoute = require('./routes/auth');
 const profileRoute = require('./routes/profile');
 const skillsRoute = require('./routes/skills');
+const progLangRoute = require('./routes/proglang');
 
 // Use routes
 app.use(cors());
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/api/auth', authRoute);
 app.use('/api/profile', profileRoute);
 app.use('/api/skills', skillsRoute);
+app.use('/api/proglang', progLangRoute);
 
 
 const port = process.env.PORT; // You can use environment variables for port configuration
