@@ -4,7 +4,19 @@ const { projects } = require('../models');
 
 exports.getAll = async (req, res) => {
     try {
-        const allProglang = await allProglang.findAll();
+        const allProglang = await projects.findAll({
+            include: [
+                {
+                    model: projects.ProgrammingLanguage,
+                    as: 'programmingLanguages',
+                    through: { attributes: [] } // Exclude join table attributes
+                },
+                {
+                    model: projects.ProgrammingLanguage,
+                    as: 'highlightLanguage'
+                }
+            ]
+        });
         res.status(200).json({
             message: 'Programming Language retrieved successfully',
             data: allProglang
