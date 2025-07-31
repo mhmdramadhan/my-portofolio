@@ -24,6 +24,7 @@ db.profile = require('./profile')(sequelize, Sequelize);
 db.programmingLanguage = require('./programminglanguage')(sequelize, Sequelize);
 db.projects = require('./project')(sequelize, Sequelize);
 db.skills = require('./skills')(sequelize, Sequelize);
+db.ProjectProgrammingLanguage = require('./projectprogramminglanguage')(sequelize, Sequelize);
 
 
 module.exports = db;

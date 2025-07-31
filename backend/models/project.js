@@ -11,6 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // add join to programming languages table
+      Project.belongsToMany(models.ProgrammingLanguage, {
+        through: models.ProjectProgrammingLanguage,
+        foreignKey: 'projectId',
+        otherKey: 'programmingLanguageId',
+        as: 'programmingLanguages'
+      });
+
+      // add association to programmingLanguage table (yang higlight)
+      Project.belongsTo(models.ProgrammingLanguage, {
+        foreignKey: 'prId', // foreign key di table `projects`
+        as: 'highlightLanguage'
+      });
+
     }
   }
   Project.init({
@@ -24,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Project',
+    tableName: 'projects',
   });
   return Project;
 };

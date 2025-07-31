@@ -11,6 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // define association here
+      ProgrammingLanguage.belongsToMany(models.Project, {
+        through: models.ProjectProgrammingLanguage,
+        foreignKey: 'programmingLanguageId',
+        otherKey: 'projectId',
+        as: 'projects'
+      });
+
+      // digunakan untuk highlight (hasMany, karena bisa lebih dari 1 project pakai dia sebagai highlight)
+      ProgrammingLanguage.hasMany(models.Project, {
+        foreignKey: 'prId',
+        as: 'highlightedProjects'
+      });
     }
   }
   ProgrammingLanguage.init({
