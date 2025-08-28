@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-exports.skillsValidate = [
+exports.progrLangValidate = [
     body('name')
         .notEmpty().withMessage('Name is required'),
     body('icon_url')

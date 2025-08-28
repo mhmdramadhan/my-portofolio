@@ -4,7 +4,8 @@ const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({
-    path: '.env.local'
+    path: '.env.local',
+    debug: true
 });
 
 // Include route files
